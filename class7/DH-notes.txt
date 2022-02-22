@@ -1,2 +1,3 @@
 Setting up your dreamhost account for nodeJS
 
+1. ssh
