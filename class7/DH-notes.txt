@@ -10,6 +10,7 @@ which should be "dh_" followed by some random characters.]
 5. create mydomain.xyz/.htaccess for Passenger
 6. create mydomain.xyz/app.js
 7. restart passenger
+8. install node packages
 
 
 Details:
@@ -34,8 +35,12 @@ Details:
      Open a shell window.
      Follow the rest of the Mac instructions.
  
- 
+  To end an ssh session, type:
+         exit
+         
+  
   Aside: if you want to change your password, type the command "passwd" and follow the prompts.
+  
   
   
 
@@ -58,8 +63,60 @@ Details:
     Personally, I recommend doing the following because of that:
          echo "source .bashrc" >> ~/.bash_profile
 
-  4. Put static files in "public" folder
+
+
+
+4. Put static files in "public" folder
   
+    In your domain's files on the dreamhost server, there's a directory (aka folder) named "mydomain.xyz", which holds all
+    the files for the actual web server.  Inside there is a sub-directory named "public".  Any static files - that is, HTML,
+    CSS, or image files - should be put in "public".  e.g. if you put a file named "hello.html" there, it can be seen on the
+    web at "http://mydomain.xyz/hello.html".
+    
     This can be done using the WebFTP link that I sent you.  Note that if you change your password, the link will no longer
     work automatically, but you can still log in using your website name, username and password.
     
+
+
+5. Create mydomain.xyz/.htaccess for Passenger
+
+    We are using the Phusion Passenger app server to run our websites - it manages apache (the web server) and node.
+    See https://www.phusionpassenger.com/ for more info.
+    For Passenger to be able to run the copy of node that you installed earlier, type this command:
+         echo PassengerNodejs ~/.nvm/versions/node/v13.14.0/bin/node > mydomain.xyz/.htaccess
+         
+
+
+6. Create mydomain.xyz/app.js
+    
+    Passenger looks for a script named "app.js" to run with node.  This file must be in the "mydomain.xyz" directory (but
+    NOT in the "public" sub-directory).
+    
+    Create a file app.js on your computer.  Put some code, such as the hello-world example from https://nodejs.org/en/about/
+    in it.  Upload it to your site using the WebFTP link.
+    
+
+
+7. Restart passenger
+
+    Passenger is, by default, always running.  This means that it's using the "app.js" that it found when it started; if
+    you make changes to that file (including the first time you upload it), you will have to restart Passenger to get it
+    to re-read the file.  This can be done using a special file that Passenger checks regularly, named "mydomain.xyz/tmp/restart.txt"
+    
+    The first time you set up node, you must create the "tmp" directory by typing:
+        mkdir ~/mydomain.xyz/tmp
+        
+    Then, any time you change your app.js, type this command in an ssh session:
+        touch ~/mydomain.xyz/tmp/restart.txt
+        
+
+
+8. Install node packages
+
+     To create more interesting applications than "hello world", you'll generally need to install some additional node
+     packages.  Use "npm" for this.
+     
+     For my simple web form example, type the following in an ssh session:
+         npm install express
+         npm install body-parser
+
