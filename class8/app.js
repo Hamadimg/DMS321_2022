@@ -50,19 +50,19 @@ app.get('/rps/:choice', function (req, res) {
     res.send(makeHTMLPage(output));
 });
 
-var blogposts = [ { 'title': "a posting", 'body': "this is a first posting on my blog"} ];
+var blogposts = [ ];
 
 app.get('/blog', function (req,res) {
     var output = '<h1>The Blog</h1>\n';
     for (i=0; i < blogposts.length; i++)
         {
-        output += `<div><h2>${blogposts[i].title}</h2><p>${blogposts[i].body}</p></div>\n`;
+        output += `<div><h2>${blogposts[i].title}</h2><p>posted ${blogposts[i].date}</p><p>${blogposts[i].body}</p></div>\n`;
         }
     res.send(makeHTMLPage(output));
 });
 
 app.post('/blogpost', urlencodedParser, function (req, res) {
-    var newpost = { 'title': req.body.title, 'body': req.body.message };
+    var newpost = { 'title': req.body.title, 'date': Date(), 'body': req.body.message };
     blogposts.push(newpost);
     res.redirect('/blog');
 });
