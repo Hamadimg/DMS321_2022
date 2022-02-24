@@ -61,6 +61,12 @@ app.get('/blog', function (req,res) {
     res.send(makeHTMLPage(output));
 });
 
+app.post('/blogpost', urlencodedParser, function (req, res) {
+    var newpost = { 'title': req.body.title, 'body': req.body.message };
+    blogposts.push(newpost);
+    res.redirect('/blog');
+});
+
 app.post('/submitform', urlencodedParser, function (req, res) {
    var answer = makeHTMLPage(`<p>Hello, ${req.body.username}</p><p>Your message was:</p><pre>${req.body.message}</pre>`);
    res.send(answer);
