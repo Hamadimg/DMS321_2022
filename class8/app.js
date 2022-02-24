@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/rps/:choice', function (req, res) {
-    var answer = makeHTMLPage('<p>You chose ${req.params.choice}</p>');
+    var answer = makeHTMLPage(`<p>You chose ${req.params.choice}</p>`);
     res.send(answer);
 })
 
