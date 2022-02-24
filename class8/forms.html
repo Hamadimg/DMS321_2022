@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321 - CSS</title>
+<style>
+html {
+    font-size: 5em;
+    }
+h1 {
+    text-decoration: underline;
+    text-align: center;
+    }
+ul {
+    margin-left: 1em;
+    }
+.tt { font-family: Courier; }
+</style>
+</head>
+
+<body>
+
+<div id="page0">
+<h1>HTML Forms</h1>
+<p>
+input to website: person viewing page can submit data
+</p>
+<p>
+important parts:
+<ul>
+<li>action</li>
+<li>method</li>
+<li>inputs: name -> value</li>
+</ul>
+</p>
+</div>
+<br><br><br><br><br><br>
+
+<div id="page1">
+<h2>action</h2>
+<p>
+URL to which form data is sent
+</p>
+<br>
+<h2>method</h2>
+<dl>
+<dt>GET</dt>
+<dd>
+includes data in the URL.  example: <br>
+<span class="tt">http://example.com/myscript?firstname=John&amp;lastname=Doe</span>
+</dd>
+<dt>POST</dt>
+<dd>
+data is sent in HTTP header<br>
+allows for more data
+</dd>
+</dl>
+</div>
+<br><br><br><br><br><br>
+
+<div id="page2">
+<h2>Form inputs</h2>
+<p>
+all inputs should have a unique "name" attribute
+<br>
+name is used on the server to access the different data
+</p>
+<p>
+some major input types:
+</p>
+<dl>
+
+<dt>submit button</dt>
+<dd>
+sends the form to the server<br>
+<span class="tt">&lt;input type="submit" name="submit"&gt;</span><br>
+<input type="submit" name="submit">
+</dd>
+<br><br>
+<dt>text input</dt>
+<dd>
+<span class="tt">&lt;input type="text" name="firstName"&gt;</span><br>
+<input type="text" name="data1">
+</dd>
+<br><br>
+<dt>checkbox</dt>
+<dd>
+<span class="tt">&lt;input type="checkbox" name="acceptedeula" value="1"&gt;</span><br>
+<input type="checkbox" name="yesorno" value="1">
+</dd>
+<br><br>
+<dt>textarea</dt>
+<dd>
+<span class="tt">&lt;textarea name="blockoftext" rows="10" cols="40"&gt;&lt;/textarea&gt;</span><br>
+<textarea name="blockoftext" rows="10" cols="40"></textarea>
+</dd>
+<br><br>
+<dt>menu</dt>
+<dd>
+<div class="tt">&lt;select name="menuchoice"&gt;<br>
+&lt;option value="1"&gt;one&lt;option&gt;<br>
+&lt;option value="2"&gt;two&lt;option&gt;<br>
+&lt;option value="not3"&gt;four&lt;option&gt;<br>
+&lt;select&gt;
+</div>
+<select>
+<option value="1">one</option>
+<option value="2">two</option>
+<option value="not3">four</option>
+</select>
+</dd>
+<br><br>
+<dt>hidden input</dt>
+<dd>
+<span class="tt">&lt;input type="hidden" name="secret" value="fnord"&gt;</span><br>
+<input type="hidden" name="secret" value="fnord">
+</dd>
+
+</dl>
+</div>
+<br><br><br><br><br><br>
+
+</body>
+</html>
