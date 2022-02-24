@@ -1,5 +1,3 @@
-// Note: rename this to just "app.js" when installing it on your website, for Passenger to use it
-
 var express = require('express');
 var app = express();
 const bodyParser = require('body-parser');
@@ -21,15 +19,18 @@ ${s}
 `;
     }
 
+app.get('/', function (req, res) {
+   res.send('Hello World, from express');
+});
+
+
+
+
 function choose(list)
     {
     var i = Math.floor(Math.random() * list.length);
     return list[i];
     }
-
-app.get('/', function (req, res) {
-   res.send('Hello World, from express');
-});
 
 app.get('/rps/:choice', function (req, res) {
     var human = req.params.choice;
@@ -50,6 +51,10 @@ app.get('/rps/:choice', function (req, res) {
     res.send(makeHTMLPage(output));
 });
 
+
+
+
+
 var blogposts = [ ];
 
 app.get('/blog', function (req,res) {
@@ -66,6 +71,9 @@ app.post('/blogpost', urlencodedParser, function (req, res) {
     blogposts.push(newpost);
     res.redirect('/blog');
 });
+
+
+
 
 app.post('/submitform', urlencodedParser, function (req, res) {
    var answer = makeHTMLPage(`<p>Hello, ${req.body.username}</p><p>Your message was:</p><pre>${req.body.message}</pre>`);
