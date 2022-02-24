@@ -47,7 +47,7 @@ app.get('/rps/:choice', function (req, res) {
         output += '<p>I win!</p>';
     output += '<p><a href="/rps.html">Play again?</a></p>';
     res.set('Cache-Control','no-store');
-    res.send(output);
+    res.send(makeHTMLPage(output));
 })
 
 app.post('/submitform', urlencodedParser, function (req, res) {
