@@ -20,7 +20,7 @@ Details:
   On a Mac:
      Open the application "Terminal".
      Type the command
-               ssh myusername@mydomainname.xyz
+               ssh myusername@mydomain.xyz
      The first time you do this, it will give you a message about "the authenticity of ... can't be established".
      Type "yes" at the prompt.
      Enter your password (I emailed it to you).
@@ -85,7 +85,10 @@ Details:
     For Passenger to be able to run the copy of node that you installed earlier, type this command:
          echo PassengerNodejs ~/.nvm/versions/node/v13.14.0/bin/node > mydomain.xyz/.htaccess
          
-
+    Note: to get more useful error messages when you have bugs that cause your app.js to not run, type:
+         echo PassengerFriendlyErrorPages on >> mydomain.xyz/.htaccess
+    (Be aware that the error pages seem to take a very long time to actually show up.)
+    
 
 6. Create mydomain.xyz/app.js
     
