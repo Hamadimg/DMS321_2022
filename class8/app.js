@@ -11,7 +11,7 @@ function makeHTMLPage(s)
 <html>
 <head>
 <meta charset="utf-8">
-<title>DMS 321 form demo</title>
+<title>DMS 321 nodejs demo</title>
 </head>
 
 <body>
