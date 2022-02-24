@@ -54,9 +54,9 @@ var blogposts = [ { 'title': "a posting", 'body': "this is a first posting on my
 
 app.get('/blog', function (req,res) {
     var output = '<h1>The Blog</h1>\n';
-    for (let i=0; i < blogposts.length; i++)
+    for (i=0; i < blogposts.length; i++)
         {
-        output += `<div><h2>$blogposts[i].title</h2><p>$blogposts[i].body</p></div>\n';
+        output += `<div><h2>$blogposts[i].title</h2><p>$blogposts[i].body</p></div>\n`;
         }
     res.send(makeHTMLPage(output));
 });
