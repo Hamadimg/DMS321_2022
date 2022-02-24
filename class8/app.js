@@ -45,7 +45,7 @@ app.get('/rps/:choice', function (req, res) {
         output += '<p>You win!</p>';
     else
         output += '<p>I win!</p>';
-    output += '<p><a href="rps.html">Play again?</a></p>';
+    output += '<p><a href="/rps.html">Play again?</a></p>';
     res.send(output);
 })
 
