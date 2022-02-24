@@ -46,6 +46,7 @@ app.get('/rps/:choice', function (req, res) {
     else
         output += '<p>I win!</p>';
     output += '<p><a href="/rps.html">Play again?</a></p>';
+    res.set('Cache-Control','no-store');
     res.send(output);
 })
 
