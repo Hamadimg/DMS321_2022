@@ -3,7 +3,7 @@
 var express = require('express');
 var app = express();
 const bodyParser = require('body-parser');
-var urlencodedParser=bodyParser.urlencoded({extended:false})
+var urlencodedParser=bodyParser.urlencoded({extended:false});
 
 function makeHTMLPage(s)
     {
@@ -29,7 +29,7 @@ function choose(list)
 
 app.get('/', function (req, res) {
    res.send('Hello World, from express');
-})
+});
 
 app.get('/rps/:choice', function (req, res) {
     var human = req.params.choice;
@@ -48,11 +48,22 @@ app.get('/rps/:choice', function (req, res) {
     output += '<p><a href="/rps.html">Play again?</a></p>';
     res.set('Cache-Control','no-store');
     res.send(makeHTMLPage(output));
-})
+});
+
+var blogposts = [ { 'title': "a posting", 'body': "this is a first posting on my blog"} ];
+
+app.get('/blog', function (req,res) {
+    var output = '<h1>The Blog</h1>\n';
+    for (let i=0; i < blogposts.length; i++)
+        {
+        output += `<div><h2>$blogposts[i].title</h2><p>$blogposts[i].body</p></div>\n';
+        }
+    res.send(makeHTMLPage(output));
+});
 
 app.post('/submitform', urlencodedParser, function (req, res) {
    var answer = makeHTMLPage(`<p>Hello, ${req.body.username}</p><p>Your message was:</p><pre>${req.body.message}</pre>`);
    res.send(answer);
-})
+});
 
-var server = app.listen(8081, function () {})
+var server = app.listen(8081, function () {});
