@@ -36,7 +36,7 @@ app.get('/rps/:choice', function (req, res) {
     var robot = choose(['rock', 'paper', 'scissors']);
     var output = `<p>You chose ${human}</p><p>I chose ${robot}</p>`;
     if (human == robot)
-        output += '<p>It's a tie</p>';
+        output += '<p>It\'s a tie</p>';
     else if ((human == 'rock') && (robot == 'scissors'))
         output += '<p>You win!</p>';
     else if ((human == 'paper') && (robot == 'rock'))
