@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321 - Class 9</title>
+<style>
+html {
+    font-size: 3em;
+    }
+h1.title {
+    text-decoration: underline;
+    }
+h1 {
+    text-align: center;
+    }
+ul {
+    margin-left: 1em;
+    }
+.tt { font-family: Courier; }
+div.leftcol
+  {
+  position: absolute;
+  width: 40%;
+  left: 2%;
+  }
+div.rightcol
+  { width: 40%;
+  position: absolute;
+  left: 50%;
+  }
+.boxed
+    {
+    border: solid;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="page">
+<h1>Anonymous functions</h1>
+<ul>
+<li>Anonymous function == function without a name</li>
+<li>"1st class citizen"
+</ul>
+<div class="leftcol">
+<h2>Named</h2>
+<pre>
+function hello(req, res) {
+    res.end("Hello, world");
+    }
+
+var server = http.createServer(hello);
+server.listen(8000);
+</pre>
+</div>
+<div class="rightcol">
+<h2>Anonymous</h2>
+<pre>
+var server = http.createServer(function (req,res) {
+    res.end("Hello, world");
+    });
+
+server.listen(8000);
+</pre>
+</div>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+
+<div class="page">
+<h1>Asynchrony</h1>
+<p>Issue a command, don't wait for the result</p>
+<div class="leftcol">
+<h2>Synchronous</h2>
+<pre>
+    fd = open("myfile.txt", O_WRONLY);
+    write(fd, data, 1);
+    close(fd);
+</pre>
+</div>
+<div class="rightcol">
+<h2>Asynchronous</h2>
+<pre>
+    fs.open("myfile.txt", "w", function (err,fd) {
+        fs.write(fd, data, function (err, written, string) {
+            fs.close(fd, function (err) {
+                });
+            });
+        });
+</pre>
+</div>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<div class="page">
+<h1>Anonymous functions &amp; Closures</h1>
+<ul>
+<li>Closure == variable scope when function created</li>
+</ul>
+
+<p>
+Without anonymous functions, hypothetically we might try this:
+</p>
+<pre>
+function myCode() {
+    ...
+    fs.open("myfile.txt", "w", doWrite);
+    ...
+    }
+
+function doWrite(err, fd) {
+    fs.write(fd, data, doClose);
+    }
+
+function doClose(err, written, string) {
+    fs.close(fd, closeDone);
+    }
+
+function closeDone(err) {
+    }
+</pre>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<div class="page">
+<h1>making a module</h1>
+
+<p>In app.js:</p>
+<pre class="boxed">
+const mymod = require('./mymodule.js');
+
+app.get('/hello', mymod.sayHello);
+</pre>
+<br><br>
+<p>In mymodule.js:</p>
+<pre class="boxed">
+module.exports.sayHello = helloWorld;
+
+function helloWorld(req, res) {
+    res.end('Hello, world');
+    }
+</pre>
+
+</body>
+</html>
