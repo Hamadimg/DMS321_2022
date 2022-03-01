@@ -38,6 +38,14 @@ div.rightcol
 <body>
 
 <div class="page">
+<h1 class="title">Some Javascript details</h1>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<div class="page">
 <h1>Anonymous functions</h1>
 <ul>
 <li>Anonymous function == function without a name</li>
@@ -133,6 +141,36 @@ function closeDone(err) {
 <br><br><br><br><br><br>
 
 <div class="page">
+<h1>Javascript objects</h1>
+<ul>
+<li>a collection of data</li>
+<li>contains "properties"</li>
+<li>effectively a grouping of variables</li>
+</ul>
+<p>Separate variables:</p>
+<pre class="boxed">
+var x = 10;
+var y = -3;
+var name = "Mario";
+console.log(`Its-a me, ${name} at ${x},${y}`);
+</pre>
+<br><br>
+<p>Object:</p>
+<pre class="boxed">
+var player = {
+             x: 10,
+             y: -3,
+             name: "Mario"
+             };
+console.log(`Its-a me, ${player.name} at ${player.x},${player.y}`);
+</pre>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<div class="page">
 <h1>making a module</h1>
 
 <p>In app.js:</p>
@@ -150,6 +188,88 @@ function helloWorld(req, res) {
     res.end('Hello, world');
     }
 </pre>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<div class="page">
+<h1>Databases</h1>
+<ul>
+<li>collection of data
+<li>structure
+<li>persistence
+<li>API or query language
+</ul>
+<br>
+<p>"CRUD":</p>
+<ul>
+<li>Create
+<li>Read
+<li>Update
+<li>Delete
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<div class="page">
+<h1>SQL</h1>
+<ul>
+<li>"Structued Query Language"
+<li>for relational databases
+<li>MySQL, PostgreSQL, SQLite, Oracle, etc
+</ul>
+<br><br>
+<pre>
+SELECT * FROM City WHERE Name="Buffalo"
+UPDATE City SET Name="too small" WHERE Population < 1000
+</pre>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<div class="page">
+<h1>Relational Database</h1>
+<ul>
+<li>Tables
+<li>Rows
+<li>Columns
+</ul>
+<table border="1">
+<tr><th>ID<th>Name<th>CountryCode<th>District<th>Population</tr>
+<tr><td>1<td>Buffalo<td>US<td>New York<td>278349</tr>
+<tr><td>2<td>Rochester<td>US<td>New York<td>211388</tr>
+<tr><td>3<td>Chicago<td>US<td>Illinois<td>2746388</tr>
+<tr><td>4<td>London<td>UK<td>Greater London<td>8961989</tr>
+</table>
+<br><br>
+<img src="world-schema.png">
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<div class="page">
+<h1>NoSQL</h1>
+<ul>
+<li>"document oriented" &amp; other models
+<li>mongodb, etc
+<li>collections / documents / fields
+<li><a href="http://mongodb.com/">mongodb.com</a> - cloud database
+</ul>
+<br><br>
+<pre>
+mydb.collection("movies").findOne({title: /Citizen/}, function (err,res) {
+    console.log(res.title);
+    }
+</pre>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
 
 </body>
 </html>
