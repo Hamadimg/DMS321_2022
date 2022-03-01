@@ -1,5 +1,5 @@
 const mongodb = require('mongodb');
-const uri = "mongodb+srv://dave:b%40dp%40ss7@cluster0.1iikc.mongodb.net/sample_mflix?retryWrites=true&w=majority"
+const uri = "mongodb+srv://username:password@cluster0.1iikc.mongodb.net/sample_mflix?retryWrites=true&w=majority"
 
 function myCallback(err, dbo) {
     if (err) {
