@@ -28,6 +28,10 @@ div.rightcol
   position: absolute;
   left: 50%;
   }
+pre
+    {
+    margin-left: 2em;
+    }
 .boxed
     {
     border: solid;
@@ -37,7 +41,6 @@ div.rightcol
 
 <body>
 
-<div class="page">
 <h1>Mongodb commands</h1>
 <dl>
 <dt><em>Create</em>
@@ -50,11 +53,32 @@ div.rightcol
 <dt><em>Delete</em>
 <dd>deleteOne(), deleteMany()
 </dl>
-</div>
 
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
+
+<h1>Database connection</h1>
+
+<p>
+Copy the example code from the mongodb.com Atlas control panel - under Cluster Overview, the "Connect" button.
+</p>
+<p>
+Will look something like:
+</p>
+<pre class="boxed">
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://dave:<password>@cluster0.1iikc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+</pre>
+<p>
+For a full app, leave out the "client.close()" - you'll connect once at start, and just retain that connection.
+</p>
 
 
 </body>
