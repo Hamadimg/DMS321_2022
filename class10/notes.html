@@ -47,12 +47,19 @@ pre
 <dd>insertOne(), insertMany()
 <dt><em>Read</em>
 <dd>find(), findOne()
-<dd>supplementary functions: sort(), limit(), toArray()
 <dt><em>Update</em>
 <dd>updateOne(), updateMany()
 <dt><em>Delete</em>
 <dd>deleteOne(), deleteMany()
 </dl>
+<br>
+<p>Supplementary details:</p>
+<ul>
+<li>database connection
+<li>queries
+<li>find() modifiers: sort(), limit(), toArray()
+<li>update commands
+</ul>
 
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
@@ -66,7 +73,7 @@ Copy the example code from the mongodb.com Atlas control panel - under Cluster O
 <p>
 Will look something like:
 </p>
-<pre class="boxed">
+<pre>
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://dave:<password>@cluster0.1iikc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -77,8 +84,114 @@ client.connect(err => {
 });
 </pre>
 <p>
-For a full app, leave out the "client.close()" - you'll connect once at start, and just retain that connection.
+For better security (if your code is on github), replace the 'uri' line by:
 </p>
+<pre>
+const uri = process.env.ATLAS_URI;
+</pre>
+<p>
+And put the actual URI in your .bashrc; for example:
+</p>
+<pre>
+export ATLAS_URI="mongodb+srv://dave:badpassword@cluster0.1iikc.mongodb.net/sample_mflix?retryWrites=true&w=majority"
+</pre>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Queries</h1>
+<p>
+All database functions, other than insertion, use a "query" to find/reference documents in the database.
+</p>
+<p>
+In its simplest form, a query looks like a document (Javascript object), but with only some of the fields.
+</p>
+<pre>
+var query = { title: "Metropolis" };
+</pre>
+<br>
+<p>
+More advanced queries use <em>regular expressions</em> for pattern matching.
+</p>
+<pre>
+var query1 = { title: /Met/ };
+var query2 = { title: RegExp("holy grail", "i"); }
+</pre>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>find() modifiers</h1>
+<p>
+find() returns a "cursor" object, which gives access to all the results of the search
+<br>
+this could be *many* documents, in no guaranteed order
+</p>
+
+<h2>toArray()</h2>
+<p>
+converts the cursor's data into a Javascript array, for easy processing
+</p>
+<pre>
+    collection.find(query).toArray(function (err,result) {
+        if (err) { throw err; }
+        for (var i=0; i < result.length; i++)
+            {
+            console.log(result[i]);
+            }
+        }
+</pre>
+
+<h2>limit()</h2>
+<p>
+limits the results to a given number, or less
+</p>
+<pre>
+    collection.find(query).limit(7).toArray(function (err,result) {
+        ...
+</pre>
+
+<h2>sort()</h2>
+<p>
+sorts results in increasing or decreasing order of a select field (or fields)
+</p>
+<pre>
+    /* sort by title (increasing) */
+    collection.find(query).sort({ title: 1}).toArray(function (err,result) {
+        ...
+</pre>
+<pre>
+    /* sort by year (increasing), then by title (decreasing) */
+    collection.find(query).sort({ year: 1, title: -1}).toArray(function (err,result) {
+        ...
+</pre>
+
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>update commands</h1>
+<p>
+updateOne() and updateMany() take an argument that says how to change each document that matches the query
+</p>
+<p>
+there are many possible commands, the basic one is "$set"
+</p>
+<p>
+the value associated with "$set" looks like a document, but only contains the fields you want to change
+</p>
+<pre>
+    var query = { username: "Dave" };
+    var newval = { $set: { post: "redacted" } };
+    collection.updateMany(query, newval, function (err,result) {
+</pre>
+
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
 
 
 </body>
