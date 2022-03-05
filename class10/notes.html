@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>DMS 321 - Class 9</title>
+<title>DMS 321 - Class 10</title>
 <style>
 html {
     font-size: 3em;
@@ -46,7 +46,7 @@ pre
 <dt><em>Create</em>
 <dd>insertOne(), insertMany()
 <dt><em>Read</em>
-<dd>find(), findOne()
+<dd>findOne(), find()
 <dt><em>Update</em>
 <dd>updateOne(), updateMany()
 <dt><em>Delete</em>
@@ -58,7 +58,7 @@ pre
 <li>database connection
 <li>queries
 <li>find() modifiers: sort(), limit(), toArray()
-<li>update commands
+<li>update operators
 </ul>
 
 <br><br><br><br><br><br>
@@ -75,7 +75,7 @@ Will look something like:
 </p>
 <pre>
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://dave:<password>@cluster0.1iikc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://dave:password@cluster0.1iikc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
@@ -83,6 +83,7 @@ client.connect(err => {
   client.close();
 });
 </pre>
+<br>
 <p>
 For better security (if your code is on github), replace the 'uri' line by:
 </p>
@@ -173,12 +174,12 @@ sorts results in increasing or decreasing order of a select field (or fields)
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
 
-<h1>update commands</h1>
+<h1>update operators</h1>
 <p>
 updateOne() and updateMany() take an argument that says how to change each document that matches the query
 </p>
 <p>
-there are many possible commands, the basic one is "$set"
+there are many possible operators, the basic one is "$set"
 </p>
 <p>
 the value associated with "$set" looks like a document, but only contains the fields you want to change

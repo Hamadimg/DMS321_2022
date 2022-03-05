@@ -29,7 +29,4 @@ app.post('/submitform', urlencodedParser, Submitform);
 app.get('/rps/:choice', rps.RPSChoice);
 app.get('/mongo/:title', mymongo.search);
 
-const restarter = require('./restarter.js');
-app.get('/restart', restarter.restart);
-
 var server = app.listen(8081, function () {});
