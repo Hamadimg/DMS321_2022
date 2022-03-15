@@ -38,15 +38,12 @@ const miniblog = require('./miniblog.js');
 app.get('/blog', miniblog.Blog);
 app.post('/blogpost', miniblog.BlogPost);
 
-const mymongo = require('./mymongo.js');
-app.use('/', mymongo);
-
-const todo = require('./todo.js');
-app.use('/',todo);
+app.use('/', require('./todo.js'));
 */
 
-const cookies = require('./cookies.js');
-app.use('/',cookies);
+app.use('/', require('./mymongo.js'));
+
+app.use('/', require('./cookies.js'));
 
 
 let server = app.listen(8079, function () {});
