@@ -32,7 +32,6 @@ function socialLogin(req, res) {
     client.connect(function (err) {
             if (err) { throw err; }
             let collection = client.db("social").collection("users");
-//            let query = { username: req.body.username };
             let query = { username: new RegExp(`^${req.body.username}$`,'i') };
             collection.findOne(query, function (err,result) {
                 if (err) { response.send(err); }
