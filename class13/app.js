@@ -1,10 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+let app = express();
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-var urlencodedParser=bodyParser.urlencoded({extended:false});
-var app = express();
-
 const sess_uri = process.env.ATLAS_SESSION_URI;
 
 app.use(session({ secret: 'fnord',
@@ -19,6 +17,7 @@ app.use(function (req,res,next) {
     next();
     });
 
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
 
@@ -26,7 +25,6 @@ app.use(bodyParser.urlencoded({extended:false}));
 const makeHTMLPage = require('./makehtml.js').makeHTMLPage;
 
 function homepage(req, res) {
-    res.set('Cache-Control','no-store');
     res.send(makeHTMLPage('<p>Hello World, from express</p>'));
     }
 app.get('/', homepage);
@@ -38,17 +36,14 @@ app.get('/rps/:choice', rps.RPSChoice);
 
 const miniblog = require('./miniblog.js');
 app.get('/blog', miniblog.Blog);
-app.post('/blogpost', urlencodedParser, miniblog.BlogPost);
+app.post('/blogpost', miniblog.BlogPost);
 
-const mymongo = require('./mymongo.js');
-app.use('/', mymongo);
-
-const todo = require('./todo.js');
-app.use('/',todo);
+app.use('/', require('./todo.js'));
 */
 
-const cookies = require('./cookies.js');
-app.use('/',cookies);
+app.use('/', require('./mymongo.js'));
+
+app.use('/', require('./cookies.js'));
 
 
-var server = app.listen(8079, function () {});
+let server = app.listen(8079, function () {});
