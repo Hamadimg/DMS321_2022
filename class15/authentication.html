@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321 - Class 15</title>
+<style>
+html {
+    font-size: 3em;
+    }
+h1.title {
+    text-decoration: underline;
+    }
+h1 {
+    text-align: center;
+    }
+ul {
+    margin-left: 1em;
+    }
+.tt { font-family: Courier; }
+div.leftcol
+  {
+  position: absolute;
+  width: 45%;
+  left: 0%;
+  }
+div.rightcol
+  { width: 45%;
+  position: absolute;
+  left: 50%;
+  }
+pre
+    {
+    margin-left: 1em;
+    }
+.boxed
+    {
+    border: solid;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Authentication</h1>
+<p>
+Website logins:
+<ul>
+<li>Personalize view
+<li>Tie actions to actor
+<li>Confirm permission
+</ul>
+</p>
+<p style="text-align: center">
+<img src="calvin.jpg" width="75%">
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Authentication</h1>
+<p>
+<ul>
+<li> Typical method: "username" + password
+<br><br>
+<li> "username" = name, or email address?
+</ul>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Username issues</h1>
+<p>
+<ul>
+<li> Multiple people in the world have the same name
+<br><br>
+<li> Allowing one person to own a name creates artificial value
+<br><br>
+<li> "Screen name" better than username
+<br><br>
+<li> But, may need public user id that is not email address
+</ul>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Email address</h1>
+<p>
+<ul>
+<li> Assumed to be "personal"
+<br><br>
+<li> Assumed to be unique
+<br><br>
+<li> Assumed to be secure
+</ul>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Email address</h1>
+<p>
+<ul>
+<li> Validate email address
+<br><br>
+<li> Confirm address is usable
+</ul>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Email address difficulties</h1>
+<p>
+<ul>
+<li> First part is technically case-sensitive
+<br><br>
+<li> Spaces are technically allowed (in quotes)
+<br><br>
+<li> "International" character sets
+<br><br>
+<li> Gmail is "dot blind"
+</ul>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Security issues</h1>
+<p>
+Brute-force guessing passwords
+</p>
+<ul>
+<li> People use bad passwords ("Password1!") -&gt; "Dictionary attack"
+<br><br>
+<li> Manually is slow; automated can be fast
+</ul>
+<br>
+<ul>
+<li>Don't reveal reason for login failure
+<li>Make login slow
+<li>Block after [N] failures
+</ul>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Security issues: So what?</h1>
+<p>
+"I don't store credit card numbers / anything important"
+</p>
+<p>
+People re-use passwords
+<ul>
+<li> Cracking one site -> access to other sites
+</ul>
+<p>
+Any additional personal info can be useful
+</p>
+<p>
+Sites can be used for email spam, SEO spam, etc
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+
+<h1>Database dumps</h1>
+<p>
+Databases get stolen
+</p>
+<p>
+Example: <a href="https://www.vice.com/en/article/78kevq/dropbox-forces-password-resets-after-user-credentials-exposed">Dropbox user credentials exposed</a>
+</p>
+<p>
+Check: <a href="https://haveibeenpwned.com/">haveibeenpwned.com</a>
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+
+<h1>Password hashing</h1>
+<p>
+Don't store actual passwords
+</p>
+<p>
+Use a "hash" - one-way, repeatable function based on encryption
+</p>
+<p>
+When user logs in, compare hash of entered password to stored hash
+</p>
+<p>
+(Don't try to invent your own function)
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+
+<h1>Password hashing</h1>
+<p>
+Instead of grabbing password from database, data thieves must test possible passwords
+</p>
+<p>
+Offline brute-forcing is much more efficient
+</p>
+<p>
+Computers get faster - hash functions become easier
+</p>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+<h1>Salting</h1>
+<p>
+"Rainbow tables" of common passwords speed up cracking passwords
+</p>
+<p>
+"Salt" is a random value added to user's password
+</p>
+<pre class="boxed">
+let salt = await bcrypt.genSalt(10);
+let hash1 = await bcrypt.hash('foobar', salt);
+let hash2 = await bcrypt.hash('foobas', salt);
+console.log(`salt = ${salt}`);
+console.log(`foobar hashed = ${hash1}`);
+console.log(`foobas hashed = ${hash2}`);
+</pre>
+<br>
+<pre>
+salt = $2b$10$MJaWQ14vMF9NTcfdsSu7Mu
+foobar hashed = $2b$10$MJaWQ14vMF9NTcfdsSu7Mu93SZytU109udqb8he6GiZMKkkATdUpW
+foobas hashed = $2b$10$MJaWQ14vMF9NTcfdsSu7MugOFEhtVysnaScg6EJ4tNn9JsRwQlgki
+</pre>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+
+
+</body>
+</html>
