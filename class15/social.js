@@ -1,5 +1,6 @@
 /* Beginning of social media site.
    Step 2: Use hashed passwords
+    Note: you must run "npm install bcrypt" to be able to run this
 */
 const path = require('path');
 const makeHTMLPage = require('./makehtml.js').makeHTMLPage;
