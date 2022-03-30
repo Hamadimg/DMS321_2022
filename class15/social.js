@@ -14,7 +14,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 function socialFeed(req, res) {
     let s = JSON.stringify(req.session, null, 4);
-    let output = `<p>Welcome, ${req.session.user.fullname}.</p><p>Your profile says "${req.session.user.profile}"</p><pre>${s}</pre>`;
+    let output = `<p>Welcome, ${req.session.user.screenname}.</p><p>Your profile says "${req.session.user.profile}"</p><pre>${s}</pre>`;
     output += `<a href="/social/logout">log out</a>`;
     res.send(makeHTMLPage(output));
     }
