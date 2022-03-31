@@ -26,7 +26,7 @@ async function getDb() {
 
 function socialFeed(req, res) {
     let output = `<p>Welcome, ${req.session.user.screenname}.</p><p>Your profile says "${req.session.user.profile}"</p>`;
-    output += `<a href="${req.baseUrl}/logout">log out</a>`;
+    output += `<a href="/social/logout">log out</a>`;
     res.send(makeHTMLPage(output));
     }
 
@@ -55,14 +55,14 @@ async function socialLogin(req, res) {
             let ok = await bcrypt.compare(req.body.password, result.password);
             if (ok) {
                 req.session.user = result;
-                res.redirect(`${req.baseUrl}`);
+                res.redirect(`/social`);
                 }
             else {
-                res.redirect(`${req.baseUrl}/loginerror`);
+                res.redirect(`/social/loginerror`);
                 }
             }
         else {
-            res.redirect(`${req.baseUrl}/loginerror`);
+            res.redirect(`/social/loginerror`);
             }
         });
     }
@@ -105,7 +105,7 @@ async function socialNewAccount(req, res) {
             });
         }
     else {
-        res.redirect(`${req.baseUrl}/newaccounterror`);
+        res.redirect(`/social/newaccounterror`);
         }
     }
 
@@ -123,19 +123,19 @@ function socialNewAccountError(req, res) {
 function socialLogout(req, res) {
     req.session.destroy(function (err) {
         if (err) { throw err; }
-        res.redirect(`${req.baseUrl}`);
+        res.redirect(`/social`);
         });
     }
 
 const express = require('express');
 let router = express.Router();
 
-router.get('/', socialHome);
-router.get('/feed', socialFeed);
-router.post('/login', socialLogin);
-router.get('/logout', socialLogout);
-router.get('/loginerror', socialLoginError);
-router.post('/newaccount', socialNewAccount);
-router.get('/newaccounterror', socialNewAccountError);
+router.get('/social', socialHome);
+router.get('/social/feed', socialFeed);
+router.post('/social/login', socialLogin);
+router.get('/social/logout', socialLogout);
+router.get('/social/loginerror', socialLoginError);
+router.post('/social/newaccount', socialNewAccount);
+router.get('/social/newaccounterror', socialNewAccountError);
 
 module.exports = router;

@@ -48,7 +48,7 @@ app.use('/', require('./mymongo.js'));
 app.use('/', require('./cookies.js'));
 */
 
-app.use('/social', require('./social3.js'));
+app.use('/', require('./social3.js'));
 
 
 let server = app.listen(8079, function () {});
