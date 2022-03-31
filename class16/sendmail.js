@@ -1,17 +1,17 @@
 const nodemailer = require('nodemailer');
 
 let toEmail = 'depape@buffalo.edu';
-let fromEmail = process.env.SOCIAL_EMAIL_ADDRESS;
+let fromEmail = process.env.EMAIL_ADDRESS;
 
 let transporter = nodemailer.createTransport({
-    host: process.env.SOCIAL_EMAIL_SERVER,
+    host: process.env.EMAIL_SERVER,
     port: 587,
     secure: false,
     requireTLS: true,
     tls: {  rejectUnauthorized: false },
     auth: {
-        user: process.env.SOCIAL_EMAIL_ADDRESS,
-        pass: process.env.SOCIAL_EMAIL_PASSWORD
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD
         }
     });
 
