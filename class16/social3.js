@@ -1,7 +1,7 @@
 /* Beginning of social media site.
    Step 2: Use hashed passwords
    Step 3: Create-new-login page, which also sends an email to the user
-    Note: you must run "npm install nodemail" to be able to run this
+    Note: you must run "npm install nodemailer" to be able to run this
           (as well as having run "npm install bcrypt" for the previous step)
 */
 const path = require('path');
