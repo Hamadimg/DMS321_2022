@@ -1,10 +1,13 @@
 /* Beginning of social media site.
    Step 2: Use hashed passwords
-    Note: you must run "npm install bcrypt" to be able to run this
+   Step 3: Create-new-login page, which also sends an email to the user
+    Note: you must run "npm install nodemail" to be able to run this
+          (as well as having run "npm install bcrypt" for the previous step)
 */
 const path = require('path');
 const makeHTMLPage = require('./makehtml.js').makeHTMLPage;
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.ATLAS_URI;
@@ -65,6 +68,28 @@ async function socialLogin(req, res) {
     }
 
 
+function emailConfirmation(user, req) {
+    let transporter = nodemailer.createTransport({
+        host: process.env.SOCIAL_EMAIL_SERVER,
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        tls: { rejectUnauthorized: false },
+        auth: {
+            user: process.env.SOCIAL_EMAIL_ADDRESS,
+            pass: process.env.SOCIAL_EMAIL_PASSWORD,
+            }
+        });
+    let mailOptions = {
+        from: `Social Media <${process.env.SOCIAL_EMAIL_ADDRESS}>`,
+        to: user.email,
+        subject: `email from nodejs socialmedia`,
+        text: `Hello, you have created an account on the social media server (${req.headers.host}) for the address "${user.email}"`
+        };
+    transporter.sendMail(mailOptions, function (err,info) { if (err) console.log(err); else console.log(`mail sent to ${user.email}`); });
+    }
+
+
 async function socialNewAccount(req, res) {
     let db = await getDb();
     let collection = db.collection("users");
@@ -75,6 +100,7 @@ async function socialNewAccount(req, res) {
         let obj = { email: req.body.username, screenname: req.body.screenname, password: passwordhash, profile: req.body.profile };
         collection.insertOne(obj, function (err,result) {
             if (err) { throw err; }
+            emailConfirmation(obj, req);
             socialLogin(req,res);
             });
         }
