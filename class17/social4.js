@@ -1,0 +1,145 @@
+/* Beginning of social media site.
+   Step 2: Use hashed passwords
+   Step 3: Create-new-login page, which also sends an email to the user
+   Step 4: Use EJS templating
+    Note: you must run "npm install ejs" and add a line to app.js for this step
+*/
+const path = require('path');
+const makeHTMLPage = require('./makehtml.js').makeHTMLPage;
+const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = process.env.ATLAS_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+var _db;
+async function getDb() {
+    if (!_db)
+        {
+        await client.connect();
+        _db = await client.db("social");
+        }
+    return _db;
+    }
+
+
+function socialFeed(req, res) {
+/* Create some fake data that will be used in the template */
+    let postdata = [ {heading: "post #1", body: "lorem ipsum"},
+                  {heading: "post #2", body: "dolor sit amet"},
+                  {heading: "post #3", body: "consectetur adipiscing elit"}
+                ];
+/* Display the home page "index.ejs", with data for this user */
+    res.render('index', {user: req.session.user, posts: postdata});
+    }
+
+
+function socialLoginPage(req, res) {
+    res.render('loginpage');
+    }
+
+
+function socialHome(req, res) {
+    if (req.session.user)
+        socialFeed(req, res);
+    else
+        socialLoginPage(req, res);
+    }
+
+
+async function socialLogin(req, res) {
+    let db = await getDb();
+    let collection = db.collection("users");
+    let query = { email: new RegExp(`^${req.body.username}$`,'i') };
+    collection.findOne(query, async function (err,result) {
+        if (err) { response.send(err); }
+        if (result)
+            {
+            let ok = await bcrypt.compare(req.body.password, result.password);
+            if (ok) {
+                req.session.user = result;
+                res.redirect(`/social`);
+                }
+            else {
+                res.redirect(`/social/loginerror`);
+                }
+            }
+        else {
+            res.redirect(`/social/loginerror`);
+            }
+        });
+    }
+
+
+function emailConfirmation(user, req) {
+    let transporter = nodemailer.createTransport({
+        host: process.env.SOCIAL_EMAIL_SERVER,
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        tls: { rejectUnauthorized: false },
+        auth: {
+            user: process.env.SOCIAL_EMAIL_ADDRESS,
+            pass: process.env.SOCIAL_EMAIL_PASSWORD,
+            }
+        });
+    let mailOptions = {
+        from: `Social Media <${process.env.SOCIAL_EMAIL_ADDRESS}>`,
+        to: user.email,
+        subject: `email from nodejs socialmedia`,
+        text: `Hello, you have created an account on the social media server (${req.headers.host}) for the address "${user.email}"`
+        };
+    transporter.sendMail(mailOptions, function (err,info) { if (err) console.log(err); else console.log(`mail sent to ${user.email}`); });
+    }
+
+
+async function socialNewAccount(req, res) {
+    let db = await getDb();
+    let collection = db.collection("users");
+    let query = { email: new RegExp(`^${req.body.username}$`,'i') };
+    let numExisting = await collection.count(query);
+    if (numExisting == 0) {
+        let passwordhash = await bcrypt.hash(req.body.password, 10);
+        let obj = { email: req.body.username, screenname: req.body.screenname, password: passwordhash, profile: req.body.profile };
+        collection.insertOne(obj, function (err,result) {
+            if (err) { throw err; }
+            emailConfirmation(obj, req);
+            socialLogin(req,res);
+            });
+        }
+    else {
+        res.redirect(`/social/newaccounterror`);
+        }
+    }
+
+
+function socialLoginError(req, res) {
+    res.render('loginerror');
+    }
+
+
+function socialNewAccountError(req, res) {
+    res.render('newaccounterror');
+    }
+
+
+function socialLogout(req, res) {
+    req.session.destroy(function (err) {
+        if (err) { throw err; }
+        res.redirect(`/social`);
+        });
+    }
+
+const express = require('express');
+let router = express.Router();
+
+router.get('/social', socialHome);
+router.get('/social/feed', socialFeed);
+router.post('/social/login', socialLogin);
+router.get('/social/logout', socialLogout);
+router.get('/social/loginerror', socialLoginError);
+router.post('/social/newaccount', socialNewAccount);
+router.get('/social/newaccounterror', socialNewAccountError);
+
+module.exports = router;

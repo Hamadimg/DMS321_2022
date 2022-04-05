@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 socialMedia</title>
+</head>
+    
+<body>
+
+<h1>socialMedia #4</h1>
+
+<p>Welcome to socialMedia version 4, <%= user.screenname %>.</p>
+<p>Your profile says "<%= user.profile %>"</p>
+<a href="/social/logout">log out</a>
+
+<p>Here are some recent posts:</p>
+<% posts.forEach( function(p) { %>
+<h2><%= p.heading %></h2>
+<p><%= p.body %></p>
+<% }); %>
+
+</body>
+
+</html>
