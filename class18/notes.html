@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321</title>
+<style>
+html {
+    font-size: 4em;
+    }
+h1,h2 {
+    text-align: center;
+    }
+ul {
+    margin-left: 1em;
+    }
+.center {
+    text-align: center;
+    }
+</style>
+<script>
+function $(name) { return document.getElementById(name); }
+</script>
+</head>
+
+<body>
+<h1>Client-Side Javascript</h1>
+<div class="center"> <img src="diagram4.png" alt="client-side programming diagram"> </div>
+<p>
+There are two important tools related to coding in the browser:
+<ul>
+<li>DOM (document object model)
+<li>Events
+</p>
+
+<br><br><br><br>
+
+<h2>Document Object Model</h2>
+<div class="center"><img src="diagram5.png" alt="example Document Object Model for a simple web page"></div>
+<p>
+An element can be accessed by first finding it via its ID:
+</p>
+<pre>
+    let elt = document.getElementById('foo');
+</pre>
+<p> or: </p>
+<pre>
+    function $(name) { return document.getElementById(name); }
+
+    let elt = $('foo');
+</pre>
+
+<br><br>
+<p>
+Then, the element's attributes can be modified
+</p>
+<pre>
+<span onclick="$('para1').textContent='hello, world!';" onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white';">    elt.textContent = 'hello, world!';</span>
+<span onclick="$('image1').src='http://ubdms321.xyz/sasha.jpg';" onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white';">    imgelt.src = 'http://ubdms321.xyz/sasha.jpg';</span>
+<span onclick="$('header1').style.color='red';" onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white';">    hdrelt.style.color = 'red';</span>
+</pre>
+<h3 id="header1">header</h3>
+<p id="para1">lorem ipsum</p>
+<img id="image1" src="http://ubdms321.xyz/cookiemonster.jpg" width="300">
+
+<p>
+"innerHTML" is a shortcut that can add an entire new chunk of HTML
+</p>
+<pre>
+<span onclick="$('para2').innerHTML='<ul><li>hello, world!</li></ul>';" onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white';">    elt.innerHTML='&lt;ul&gt;&lt;li&gt;hello, world!&lt;/li&gt;&lt;/ul&gt;';<span>
+</pre>
+<p id="para2">lorem ipsum</p>
+
+
+<br><br><br><br>
+
+<h2>Events</h2>
+<p>
+Events happen on elements while the page is being viewed
+<br>
+They are available via the "on" attributes of the elements
+</p>
+<p>
+Some common events:
+</p>
+<ul>
+<li>click</li>
+<li>mouseover</li>
+<li>mouseout</li>
+<li>keyup</li>
+<li>keydown</li>
+<li>focus</li>
+<li>blur</li>
+</ul>
+<p>
+Example:
+</p>
+<pre onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white'">
+&lt;span onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white'"&gt;test&lt;/span&gt;
+</pre>
+<p>
+<span onmouseover="this.style.background='yellow';" onmouseout="this.style.background='white'">test</span>
+</p>
+<pre>
+&lt;span onclick="$('para3').innerHTML='new text';"&gt;test2&lt;/span&gt;
+</pre>
+<p>
+<span onclick="$('para3').innerHTML='new text';">test2</span>
+</p>
+<p id="para3">old text</p>
+
+<br><br>
+<p>
+Note: to separate code &amp; HTML content, "addEventListener()" is preferred over the "on" attributes
+</p>
+<pre>
+    &lt;script&gt;
+    function $(name) { return document.getElementById(name); }
+
+    function myFunc(event) {
+        $('para17').innerHTML = 'button clicked ' + Date();
+        }
+
+    window.onload = function () {
+        $('button17').addEventListener('click', myFunc);
+        }
+    &lt;/script&gt;
+
+    ...
+
+    &lt;button id="button17"&gt;Click Me!&lt;/button&gt;
+    &lt;p id="para17"&gt;text&lt;/p&gt;
+</pre>
+
+<button id="button17">Click Me!</button>
+<p id="para17">text</p>
+<script>
+    function myFunc(event) {
+        $('para17').innerHTML = 'button clicked: ' + Date();
+        }
+
+    $('button17').addEventListener('click', myFunc);
+</script>
+
+<br><br><br><br><br>
+
+<h2>Timing</h2>
+<p>
+Timing events are used to make something happen repeatedly, or after a delay
+</p>
+<ul>
+<li>setInterval(func, milliseconds)</li>
+<li>setTimeout(func, milliseconds)</li>
+</ul>
+
+<br>
+<p>
+(These can be stopped with "clearInterval()" or "clearTimeout()")
+</p>
+
+<br><br><br><br><br>
+
+</body>
+
+</html>

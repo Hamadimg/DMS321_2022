@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 client-side animation</title>
+<script>
+/*
+    Use setInterval to create an animation - changing the content of the page every 100 milliseconds.
+*/
+function $(name) {
+    return document.getElementById(name);
+    }
+
+let frames = [
+        '|*____|',
+        '|_*___|',
+        '|__*__|',
+        '|___*_|',
+        '|____*|',
+        '|___*_|',
+        '|__*__|',
+        '|_*___|'
+        ];
+let curFrame = 0;
+
+function animate() {
+    $('animator').textContent = frames[curFrame];
+    curFrame = (curFrame+1) % frames.length;
+    }
+
+window.onload = function () {
+    setInterval(animate, 100);
+    }
+</script>
+</head>
+
+<body>
+<h1>Animation</h1>
+<p id="animator">
+</p>
+
+</body>
+
+</html>

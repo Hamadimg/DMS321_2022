@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 client-side rock-paper-scissors</title>
+<script>
+/*
+   A simple Rock-Paper-Scissors game in client-side Javascript.
+   This takes the HTML & code from my old nodejs example, puts them together, and changes them just slightly to work in the client rather than the server.
+*/
+function choose(list) {
+    let i = Math.floor(Math.random() * list.length);
+    return list[i];
+    }
+
+function RPSChoice(human) {
+    let robot = choose(['rock', 'paper', 'scissors']);
+    let output = `<p>You chose ${human}</p><p>I chose ${robot}</p>`;
+    if (human == robot)
+        output += '<p>It\'s a tie</p>';
+    else if ((human == 'rock') && (robot == 'scissors'))
+        output += '<p>You win!</p>';
+    else if ((human == 'paper') && (robot == 'rock'))
+        output += '<p>You win!</p>';
+    else if ((human == 'scissors') && (robot == 'paper'))
+        output += '<p>You win!</p>';
+    else
+        output += '<p>I win!</p>';
+    document.getElementById('result').innerHTML = output;
+    }
+</script>
+</head>
+
+<body>
+<p>
+Let's play rock-paper-scissors
+</p>
+<p>
+What do you choose?
+<ul>
+<li><button onclick="RPSChoice('rock')">rock</button></li>
+<li><button onclick="RPSChoice('paper')">paper</button></li>
+<li><button onclick="RPSChoice('scissors')">scissors</button></li>
+</ul>
+</p>
+<p id="result">
+</p>
+
+</body>
+
+</html>

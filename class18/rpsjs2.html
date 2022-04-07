@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 client-side rock-paper-scissors</title>
+<script>
+/*
+  Add a couple things to the RPS example:
+    1. a "$" function, to save some typing
+    2. addEventListener, in place of "onclick", to separate the code from the HTML
+*/
+function $(name) {
+    return document.getElementById(name);
+    }
+
+function choose(list) {
+    let i = Math.floor(Math.random() * list.length);
+    return list[i];
+    }
+
+function RPSChoice(human) {
+    let robot = choose(['rock', 'paper', 'scissors']);
+    let output = `<p>You chose ${human}</p><p>I chose ${robot}</p>`;
+    if (human == robot)
+        output += '<p>It\'s a tie</p>';
+    else if ((human == 'rock') && (robot == 'scissors'))
+        output += '<p>You win!</p>';
+    else if ((human == 'paper') && (robot == 'rock'))
+        output += '<p>You win!</p>';
+    else if ((human == 'scissors') && (robot == 'paper'))
+        output += '<p>You win!</p>';
+    else
+        output += '<p>I win!</p>';
+    $('result').innerHTML = output;
+    }
+
+function chooseRock(event) { RPSChoice('rock'); }
+function choosePaper(event) { RPSChoice('paper'); }
+function chooseScissors(event) { RPSChoice('scissors'); }
+
+window.onload = function () {
+    $('rockbutton').addEventListener('click', chooseRock);
+    $('paperbutton').addEventListener('click', choosePaper);
+    $('scissorsbutton').addEventListener('click', chooseScissors);
+    }
+</script>
+</head>
+
+<body>
+<p>
+Let's play rock-paper-scissors
+</p>
+<p>
+What do you choose?
+<ul>
+<li><button id="rockbutton">rock</button></li>
+<li><button id="paperbutton">paper</button></li>
+<li><button id="scissorsbutton">scissors</button></li>
+</ul>
+</p>
+<p id="result">
+</p>
+
+</body>
+
+</html>

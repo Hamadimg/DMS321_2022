@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 client-side rock-paper-scissors</title>
+<script>
+/*
+    Modification of the RPS game to use anonymous functions and no global variables.
+*/
+function $(name) {
+    return document.getElementById(name);
+    }
+
+function choose(list) {
+    let i = Math.floor(Math.random() * list.length);
+    return list[i];
+    }
+
+function RPSChoice1(human) {
+    $('result').innerHTML = `<p>You chose ${human}</p>`;
+    setTimeout(function() { RPSChoice2(human) }, 1000);
+    }
+
+function RPSChoice2(human) {
+    let robot = choose(['rock', 'paper', 'scissors']);
+    $('result').innerHTML += `<p>I chose ${robot}</p>`;
+    setTimeout(function() { RPSChoice3(human,robot) }, 500);
+    }
+
+function RPSChoice3(human, robot) {
+    if (human == robot)
+        output = '<p>It\'s a tie</p>';
+    else if ((human == 'rock') && (robot == 'scissors'))
+        output = '<p>You win!</p>';
+    else if ((human == 'paper') && (robot == 'rock'))
+        output = '<p>You win!</p>';
+    else if ((human == 'scissors') && (robot == 'paper'))
+        output = '<p>You win!</p>';
+    else
+        output = '<p>I win!</p>';
+    $('result').innerHTML += output;
+    }
+
+window.onload = function () {
+    $('rockbutton').addEventListener('click', function () { RPSChoice1('rock'); });
+    $('paperbutton').addEventListener('click', function () { RPSChoice1('paper'); });
+    $('scissorsbutton').addEventListener('click', function () { RPSChoice1('scissors'); });
+    }
+</script>
+</head>
+
+<body>
+<p>
+Let's play rock-paper-scissors
+</p>
+<p>
+What do you choose?
+<ul>
+<li><button id="rockbutton">rock</button></li>
+<li><button id="paperbutton">paper</button></li>
+<li><button id="scissorsbutton">scissors</button></li>
+</ul>
+</p>
+<p id="result">
+</p>
+
+</body>
+
+</html>
