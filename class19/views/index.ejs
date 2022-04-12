@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 socialMedia</title>
+</head>
+    
+<body>
+
+<h1>socialMedia #5</h1>
+
+<p>Welcome to socialMedia version 5, <%= user.screenname %>.</p>
+<p>
+<a href="/social/logout">log out</a>
+<br>
+<a href="/social/myprofile">profile</a>
+</p>
+
+<form action="/social/newpost" method="POST">
+<textarea name="posttext"></textarea>
+<input type="submit" value="post" id="submitpost">
+</form>
+
+<form action="/social/search" method="POST">
+<input type="text" name="searchterm">
+<input type="submit" value="search" id="submitsearch">
+</form>
+
+<h2>your feed:</h2>
+<h3>user1 (date)</h3>
+<p>lorem ipsum</p>
+
+</body>
+
+</html>
