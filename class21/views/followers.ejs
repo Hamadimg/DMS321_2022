@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 socialMedia</title>
+</head>
+    
+<body>
+
+<h1>socialMedia</h1>
+<a href="/social/">home</a>
+<a href="/social/logout">log out</a>
+
+<p>you are currently being followed by:</p>
+
+<table>
+<% for (let i=0; i < users.length; i++) { %>
+<tr>
+<td><a href="/social/profile/<%= users[i]._id %>"><%= users[i].screenname %></a></td>
+<td>
+<% if (users[i].following) { %>
+<a href="/social/unfollow/<%= users[i]._id %>">unfollow</a>
+<% } else { %>
+<a href="/social/follow/<%= users[i]._id %>">follow</a>
+<% } %>
+</td>
+</tr>
+<% } %>
+</table>
+
+</body>
+
+</html>

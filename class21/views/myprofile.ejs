@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 socialMedia</title>
+</head>
+    
+<body>
+
+<h1>socialMedia</h1>
+<a href="/social/">home</a>
+<a href="/social/logout">log out</a>
+
+<p>your profile:</p>
+<div><%= profile %></div>
+<a href="/social/editprofile">edit</a>
+
+<p>your posts:</p>
+
+<form action="/social/newpost" method="POST">
+<textarea name="posttext"></textarea>
+<input type="submit" value="post" id="submitpost">
+</form>
+
+<% for (let i=0; i < posts.length; i++) { %>
+<h2><%- posts[i].date %></h2>
+<p><%- posts[i].text %></p>
+<% } %>
+
+</body>
+
+</html>

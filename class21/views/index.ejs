@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>DMS 321 socialMedia</title>
+</head>
+    
+<body>
+
+<h1>socialMedia</h1>
+
+<p>Welcome to socialMedia, <%= user.screenname %>.</p>
+<p>
+<a href="/social/logout">log out</a>
+<br>
+<a href="/social/myprofile">profile</a>
+<br>
+<a href="/social/following">following</a>
+<br>
+<a href="/social/followers">followers</a>
+</p>
+
+<form action="/social/newpost" method="POST">
+<textarea name="posttext"></textarea>
+<input type="submit" value="post" id="submitpost">
+</form>
+
+<form action="/social/search" method="POST">
+<input type="text" name="searchterm">
+<input type="submit" value="search" id="submitsearch">
+</form>
+
+<h2>your feed:</h2>
+<% for (let i=0; i < posts.length; i++) { %>
+<h3><a href="/social/profile/<%- posts[i].posterid %>"><%- posts[i].postername %></a> (<%- posts[i].date %>)</h3>
+<p><%- posts[i].posttext %></p>
+<% } %>
+
+</body>
+
+</html>
