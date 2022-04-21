@@ -5,6 +5,7 @@
    Step 5: Add templates for all the major pages; add posting & "myprofile" page; add input validation & sanitization
    Step 6: Add code to edit one's own profile, and to search for other users and display their profiles
    Step 7: Add "follow" commands
+   Step 8: Change search function to allow using AJAX
 */
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -224,7 +225,7 @@ async function socialEditProfile(req, res) {
 
 async function socialSearch(req, res) {
     if (!req.session.user) { return res.redirect(`/social`); }
-    if (req.route.methods.get)
+    if (req.route.methods.get)        /* check whether we got here via a "GET" or a "POST", to pull the searchterm parameter from the correct object */
         params = req.query;
     else
         params = req.body;
