@@ -1,0 +1,18 @@
+<%- include('htmlheader'); -%>
+
+<p>you are currently following:</p>
+
+<table>
+<% for (let i=0; i < users.length; i++) { %>
+<tr>
+<td><a href="/social/profile/<%= users[i]._id %>"><%= users[i].screenname %></a></td>
+<td>
+<a href="/social/unfollow/<%= users[i]._id %>">unfollow</a>
+</td>
+</tr>
+<% } %>
+</table>
+
+</body>
+
+</html>

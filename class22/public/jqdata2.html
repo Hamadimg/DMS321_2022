@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function gotdata(data) {
+    $("#newtext").append(data);
+    }
+
+function dosearch() {
+    let term = $("#searchterm").val();
+    $.ajax({url: `/data/search/${term}`}).done(gotdata);
+    }
+
+function checkforenter(e) {
+    if (e.keyCode == 13)
+        dosearch();
+    }
+
+$(document).ready(function () {
+    $("#searchterm").on("keypress", checkforenter);
+    $("#clicker").on("click", dosearch);
+    });
+</script>
+</head>
+
+<body>
+<p>
+search: <input id="searchterm" type="search">
+<button id="clicker">click me</button>
+</p>
+<div id="newtext">
+</div>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<%- include('htmlheader'); -%>
+
+<p>your profile:</p>
+<div><%- profile %></div>
+<a href="/social/editprofile">edit</a>
+
+<p>your posts:</p>
+
+<form action="/social/newpost" method="POST">
+<textarea name="posttext"></textarea>
+<input type="submit" value="post" id="submitpost">
+</form>
+
+<% for (let i=0; i < posts.length; i++) { %>
+<h2><%- posts[i].date %></h2>
+<p><%- posts[i].text %></p>
+<% } %>
+
+</body>
+
+</html>

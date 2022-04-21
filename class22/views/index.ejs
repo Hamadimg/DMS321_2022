@@ -1,0 +1,42 @@
+<% let scripting=`
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+function dosearch(e) {
+    let term = $("#searchterm").val();
+    $.ajax({url: '/social/search?searchterm=' + term + '&ajax=1'}).done(searchresult);
+    }
+
+function searchresult(data) {
+    $("#searchresult").html(data);
+    }
+
+$(document).ready(function () {
+    $("#submitsearch").on("click", dosearch);
+    });
+</script>
+`;
+%>
+<%- include('htmlheader', {opts: scripting}); -%>
+
+<p>Welcome to socialMedia, <%= user.screenname %>.</p>
+
+<form action="/social/newpost" method="POST">
+<textarea name="posttext"></textarea>
+<input type="submit" value="post" id="submitpost">
+</form>
+
+<input type="search" name="searchterm" id="searchterm">
+<input type="submit" value="search" id="submitsearch">
+<div id="searchresult">
+</div>
+
+<h2>your feed:</h2>
+<% for (let i=0; i < posts.length; i++) { %>
+<h3><a href="/social/profile/<%- posts[i].posterid %>"><%- posts[i].postername %></a> (<%- posts[i].date %>)</h3>
+<p><%- posts[i].posttext %></p>
+<% } %>
+
+</body>
+
+</html>

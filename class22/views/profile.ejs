@@ -1,0 +1,19 @@
+<%- include('htmlheader'); -%>
+
+<h2><%= name %></h2>
+<div><%- profile %></div>
+<% if (following) { %>
+<a href="/social/unfollow/<%= id %>">unfollow</a>
+<% } else { %>
+<a href="/social/follow/<%= id %>">follow</a>
+<% } %>
+
+<h3>posts:</h3>
+<% for (let i=0; i < posts.length; i++) { %>
+<h4><%- posts[i].date %></h4>
+<p><%- posts[i].text %></p>
+<% } %>
+
+</body>
+
+</html>
