@@ -1,6 +1,6 @@
 <%- include('header'); %>
 
-<h2>match</h2>
+<h1>match</h1>
 
 <table>
 <tr><th>player</th><th>your stake</th><th>your move</th></tr>
@@ -20,19 +20,5 @@
 </tr>
 </form>
 <% } %>
-
-<form action="makematch" method="POST">
-<tr><td>Zoot Horn Rollo</td>
-<td><input type="text" name="stake" value="1" size="4"></td>
-<td>
-<input type="hidden" name="opponent" value="2">
-<ul class="horizontallist">
-<li><input type="submit" name="rock" value="rock"></li>
-<li><input type="submit" name="paper" value="paper"></li>
-<li><input type="submit" name="scissors" value="scissors"></li>
-</ul>
-</td>
-</tr>
-</form>
 
 <%- include('footer'); %>

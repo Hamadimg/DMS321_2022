@@ -1,3 +1,8 @@
+/* This version of "rpsroyale" uses a series of Promises in the home() function,
+ instead of using 'await'.  Doing this as a test of that approach, to try to
+ see which seems more understandable.
+ This approach is in theory better because it maintains more asynchony.
+*/
 const path = require('path');
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
@@ -34,12 +39,69 @@ async function home(req, res) {
     let query = { _id: ObjectID(req.session.rpsr_user._id) };
     collection.findOne(query, async function (err, result) {
         if (err) { console.log(err); return res.sendStatus(500); }
+        findPlayerResults(req.session.rpsr_user._id).then(function (myresults) {
+            findPlayerPlays(req.session.rpsr_user._id).then(function (myplays) {
+                res.render('rpsroyale/home', { user: result, results: myresults, plays: myplays });
+                });
+            });
+        });
+    }
+
+async function findPlayerResults(playerid) {
+    let db = await getDb();
+    return new Promise(function (resolve, reject) {
+        let collection = db.collection("results");
+        let query = { $or: [ { 'player1.id': playerid },
+                            { 'player2.id': playerid }]};
+        collection.find(query).toArray(function(err, res) {
+            if (err)
+                reject(err);
+            let mergedResults = [];
+            for (let i=0; i < res.length; i++) {
+                let obj = { time: printableTime(res[i].time) };
+                if (res[i].player1.id == playerid) {
+                    obj.otherPlayer = res[i].player2.name;
+                    obj.points = res[i].player1.points;
+                    obj.result = res[i].result;
+                    }
+                else {
+                    obj.otherPlayer = res[i].player1.name;
+                    obj.points = res[i].player2.points;
+                    obj.result = oppositeResult(res[i].result);
+                    }
+                mergedResults.push(obj);
+                }
+            resolve(mergedResults);
+            });
+        });
+    }
+
+async function findPlayerPlays(playerid) {
+    let db = await getDb();
+    return new Promise(function (resolve, reject) {
+        let collection = db.collection("plays");
+        let query = { playerid: playerid };
+        collection.find(query).toArray(function (err,result) {
+            if (err)
+                reject(err);
+            resolve(result);
+            });
+        });
+    }
+
+/*
+async function home(req, res) {
+    if (!req.session.rpsr_user) { return res.redirect('loginpage'); }
+    let db = await getDb();
+    let collection = db.collection("users");
+    let query = { _id: ObjectID(req.session.rpsr_user._id) };
+    collection.findOne(query, async function (err, result) {
+        if (err) { console.log(err); return res.sendStatus(500); }
         let myresults = await findPlayerResults(req.session.rpsr_user._id);
         let myplays = await findPlayerPlays(req.session.rpsr_user._id);
         res.render('rpsroyale/home', { user: result, results: myresults, plays: myplays });
         });
     }
-
 
 async function findPlayerResults(playerid) {
     let db = await getDb();
@@ -72,6 +134,7 @@ async function findPlayerPlays(playerid) {
     let query = { playerid: playerid };
     return await collection.find(query).toArray();
     }
+*/
 
 
 function printableTime(t) {

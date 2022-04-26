@@ -9,6 +9,24 @@
 </head>
     
 <body>
+<% if (locals.user) { %>
+<header id="menu">
+<nav>
+<a href=".">RPSRoyale</a>
+<span><%= user.screenname %></span>
+<a href="newplay">new play</a>
+<a href="match">match</a>
+<a href="scoreboard">scoreboard</a>
+<a href="logout"><span class="material-icons">logout</span></a>
+</nav>
+</header>
+<% } else { %>
+<header id="menu">
+<nav>
+<a href=".">RPSRoyale</a>
+<a href=".">login</a>
+<a href="scoreboard">scoreboard</a>
+</nav>
+</header>
+<% } %>
 <div id="maindiv">
-<a href="."><span class="material-icons">home</span></a>
-<h1>RPS Royale</h1>

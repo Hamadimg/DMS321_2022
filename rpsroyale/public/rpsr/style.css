@@ -1,11 +1,13 @@
 h1 {
     text-align: center;
-    font-size: 32px;
-    color: red;
+    font-size: 24px;
+    color: blue;
+    margin-top: 0em;
     }
 
 h2 {
     text-align: center;
+    font-size: 18px;
     color: blue;
     }
 
@@ -14,7 +16,12 @@ ul.horizontallist li {
     }
 
 #maindiv {
-    width: 800px;
+    width: 600px;
     border: solid;
     padding: 1em;
     }
+
+nav a { text-decoration: none; }
+nav a:link { color: blue; }
+nav a:visited { color: blue; }
+nav a:hover { color: red; }

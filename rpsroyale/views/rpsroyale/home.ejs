@@ -9,18 +9,16 @@ $(document).ready(function () {
 %>
 <%- include('header', {opts: scripting}); %>
 
-<h2><%= user.screenname %></h2>
+<h1><%= user.screenname %></h1>
 <div>
 <ul class="horizontallist">
 <li>points: <%= user.points %></li>
-<ii>rank: 3</li>
-<li><a href="scoreboard">scoreboard</a></li>
-<li><a href="logout">logout</a></li>
+<ii>rank: ???</li>
 </ul>
 </div>
 
 <div>
-<h3>recent results</h3>
+<h2>recent results</h2>
 <table>
 <tr><th>name</th><th>result</th><th>points</th><th>time</th></tr>
 <% for (let i=0; i < results.length; i++) { %>
@@ -31,13 +29,11 @@ $(document).ready(function () {
 <td><%= results[i].time %></td>
 </tr>
 <% } %>
-<tr><td>Art Tripp</td><td>W</td><td>1</td><td>08:12 Apr 23, 2022</td></tr>
-<tr><td>Zoot Horn Rollo</td><td>L</td><td>-2</td><td>19:19 Apr 22, 2022</td></tr>
 </table>
 </div>
 
 <div>
-<h3>open plays</h3>
+<h2>open plays</h2>
 <table>
 <% for (let i=0; i < plays.length; i++) { %>
 <tr>
@@ -46,11 +42,6 @@ $(document).ready(function () {
 </tr>
 <% } %>
 </table>
-</div>
-
-<div style="text-align: center">
-<span style="display: inline-block; width:30%"><a href="newplay">new play</a></span>
-<span style="display: inline-block; width:30%"><a href="match">match</a></span>
 </div>
 
 <%- include('footer'); %>
