@@ -35,7 +35,7 @@ function receiveData(msg) {
     }
 
 $(document).ready(function () {
-    ws = new WebSocket('ws://test.ubdms321.xyz:7080', 'udp');
+    ws = new WebSocket('ws://test.ubdms321.xyz:7080');
     ws.addEventListener('message',receiveData);
     });
 
