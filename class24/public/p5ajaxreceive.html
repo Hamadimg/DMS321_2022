@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321</title>
+<style></style>
+<script src="./p5.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let x = 100;
+let y = 100;
+let dir = 0;
+    
+function setup() {
+    createCanvas(720, 400);
+    frameRate(30);
+    }
+
+function draw() {
+    background(0);
+    fill(255);
+    translate(x,y);
+    rotate(radians(dir));
+    triangle(-5, 10, 0, -10, 5, 10);
+    }
+
+
+function receiveData(data) {
+    let d = JSON.parse(data);
+    x = d.x;
+    y = d.y;
+    dir = d.dir;
+    }
+
+function requestDataAjax() {
+    $.ajax({url: `/server/get/1`}).done(receiveData);
+    }
+
+$(document).ready(function () {
+    setInterval(requestDataAjax, 200);
+    });
+
+</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

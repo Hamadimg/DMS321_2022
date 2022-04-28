@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321</title>
+<style></style>
+<script src="./p5.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let x = 100;
+let y = 100;
+let dir = 0;
+let name = "me";
+let others = { };
+    
+function setup() {
+    createCanvas(720, 400);
+    frameRate(30);
+    }
+
+function draw() {
+    keyboardControls();
+    background(0);
+    fill(255,100,0);
+    drawShip(x,y,dir,name);
+    fill(255,255,255);
+    Object.values(others).forEach(function (o) { drawShip(o.x, o.y, o.dir, o.name); });
+    }
+
+function drawShip(x,y,dir,name) {
+    translate(x,y);
+    rotate(radians(dir));
+    triangle(-5, 10, 0, -10, 5, 10);
+    text(name,-5,20);
+    resetMatrix();
+    }
+
+function keyboardControls() {
+    if (keyIsDown(LEFT_ARROW))
+        dir -= 4;
+    if (keyIsDown(RIGHT_ARROW))
+        dir += 4;
+    if (keyIsDown(UP_ARROW)) {
+        x += sin(radians(dir)) * 5;
+        y += -cos(radians(dir)) * 5;
+        if (x < 0) x = 720;
+        else if (x > 720) x = 0;
+        if (y < 0) y = 400;
+        else if (y > 400) y = 0;
+        }
+    sendData();
+    }
+
+
+let ws;
+
+function sendData() {
+    if (ws.readyState == WebSocket.OPEN) {
+        let data = JSON.stringify({x:x, y:y, dir:dir, name:name});
+        ws.send(data);
+        }
+    }
+
+
+function receiveData(msg) {
+    let d = JSON.parse(msg.data);
+    others[d.name] = d;
+    }
+
+
+$(document).ready(function () {
+    name = "p" + Math.floor(Math.random()*1000);
+    ws = new WebSocket('ws://test.ubdms321.xyz:7080');
+    ws.addEventListener('message', receiveData);
+    });
+
+</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

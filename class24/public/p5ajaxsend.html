@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321</title>
+<style></style>
+<script src="./p5.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let x = 100;
+let y = 100;
+let dir = 0;
+    
+function setup() {
+    createCanvas(720, 400);
+    frameRate(30);
+    }
+
+function draw() {
+    keyboardControls();
+    background(0);
+    fill(255,100,0);
+    translate(x,y);
+    rotate(radians(dir));
+    triangle(-5, 10, 0, -10, 5, 10);
+    }
+
+function keyboardControls() {
+    if (keyIsDown(LEFT_ARROW))
+        dir -= 4;
+    if (keyIsDown(RIGHT_ARROW))
+        dir += 4;
+    if (keyIsDown(UP_ARROW)) {
+        x += sin(radians(dir)) * 5;
+        x = (x+720) % 720;
+        y += -cos(radians(dir)) * 5;
+        y = (y+400) % 400;
+        }
+    }
+
+function sendDataAjax() {
+    $.ajax({url: `/server/set/1/${x}/${y}/${dir}`}).done(function (data) { });
+    }
+
+$(document).ready(function () {
+    setInterval(sendDataAjax, 200);
+    });
+
+
+</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

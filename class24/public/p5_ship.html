@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- A simple spaceship, moving under keyboard control.
+     This is just the starting point to demonstrate sharing data over the network,
+     either via AJAX or WebSockets.  -->
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321</title>
+<style></style>
+<script src="./p5.js"></script>
+<script>
+let x = 100;
+let y = 100;
+let dir = 0;
+    
+function setup() {
+    createCanvas(720, 400);
+    frameRate(30);
+    }
+
+function draw() {
+    keyboardControls();
+    background(0);
+    fill(255,100,0);
+    translate(x,y);
+    rotate(radians(dir));
+    triangle(-5, 10, 0, -10, 5, 10);
+    }
+
+function keyboardControls() {
+    if (keyIsDown(LEFT_ARROW))
+        dir -= 4;
+    if (keyIsDown(RIGHT_ARROW))
+        dir += 4;
+    if (keyIsDown(UP_ARROW)) {
+        x += sin(radians(dir)) * 5;
+        y += -cos(radians(dir)) * 5;
+        if (x < 0) x = 720;
+        else if (x > 720) x = 0;
+        if (y < 0) y = 400;
+        else if (y > 400) y = 0;
+      }
+    }
+</script>
+</head>
+
+<body>
+
+</body>
+
+</html>
