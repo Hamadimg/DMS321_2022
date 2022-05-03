@@ -11,7 +11,6 @@ wss.on('connection', newConnection);
 
 function newConnection(ws) {
     console.log('new connection');
-    console.log(ws);
     ws.on('message', function (data) { receiveData(data,ws); });
     }
 

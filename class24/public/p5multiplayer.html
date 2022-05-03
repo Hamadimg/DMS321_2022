@@ -70,7 +70,7 @@ function receiveData(msg) {
 
 $(document).ready(function () {
     name = "p" + Math.floor(Math.random()*1000);
-    ws = new WebSocket('ws://test.ubdms321.xyz:7080');
+    ws = new WebSocket('ws://ubdms321.xyz:7080');
     ws.addEventListener('message', receiveData);
     });
 
