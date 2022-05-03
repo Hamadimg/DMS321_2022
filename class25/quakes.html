@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DMS 321 earthquake demo</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function gotdata(quakes) {
+    let date = new Date();
+    let datestr = date.toLocaleDateString('en-us', { month: "short", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", timeZone:"America/New_York", timeZoneName:"short"});
+    $("#dateinfo").html(`<p>Last updated ${datestr}</p>`);
+    let table = $("#quaketable");
+    table.html("<th>magnitude</th><th>time</th><th>location</th>");
+    for (let i=0; i < quakes.metadata.count; i++) {
+        let row = $("<tr>");
+        let mag = quakes.features[i].properties.mag;
+        let place = quakes.features[i].properties.place;
+        let time = new Date(quakes.features[i].properties.time);
+        let timestr = time.toLocaleDateString('en-us', { month: "short", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", timeZone:"America/New_York", timeZoneName:"short"});
+        row.html(`<td>${mag}</td><td>${timestr}</td><td>${place}</td>`);
+        table.append(row);
+        }
+    }
+
+function dosearch() {
+    $.ajax({url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson'}).done(gotdata);
+    }
+
+$(document).ready(function () {
+    dosearch();
+    setInterval(dosearch, 60000);
+    });
+</script>
+</head>
+
+<body>
+<h1>Earthquake Reports</h1>
+<div id="dateinfo"></div>
+<table id="quaketable"></table>
+
+</body>
+
+</html>
