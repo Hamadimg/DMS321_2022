@@ -2,7 +2,7 @@
  Example of how to include a websocket server into app.js when working with Phusion Passenger.
  This should be renamed app.js if you're going to use it.
  Note that you will need to visit one of the express routes (such as '/') first, to cause Passenger to start this app, *before* attempting to connect to the socket server.  If your page that uses sockets is returned via an express route, rather than being a static html file, that should be sufficient.
- This version is for a site that uses https.  The site's certificate and RSA private key must be available in text files for this script to read.
+ This version is for a site that uses http, and *not* https
 */
 const express = require('express');
 let app = express();
@@ -77,21 +77,11 @@ else {
 /* Be aware that if you have this app running via Passenger, and then also
   try to run it manually at the same time (for debugging), it may die
   because of two separate processes trying to both use the same port.  */
-
-const https = require('https');
-const fs = require('fs');
-
-const options = {
-  key: fs.readFileSync('rsakey.txt'),
-  cert: fs.readFileSync('certificate.txt')
-};
-
-const httpserver = https.createServer(options);
-httpserver.listen(7080);
-
 const { WebSocket, WebSocketServer } = require('ws');
 
+const httpserver = require('http').createServer();
 const wss = new WebSocketServer({server: httpserver}, function () {});
+httpserver.listen(7080);
 
 wss.on('connection', newConnection);
 
@@ -107,4 +97,3 @@ function receiveData(data,ws) {
             }
         });
     }
-
