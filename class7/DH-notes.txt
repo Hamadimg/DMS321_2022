@@ -28,7 +28,7 @@ Details:
   On Windows:
      Install the application "putty", from https://www.chiark.greenend.org.uk/~sgtatham/putty/
      Run putty and connect to mydomain.xyz
-     The first time you do this, it ask if you want to save a "key fingerprint" for the site.  Say yes.
+     The first time you do this, it will ask if you want to save a "key fingerprint" for the site.  Say yes.
      Enter your username password (I emailed it to you).
      
   On Linux:
